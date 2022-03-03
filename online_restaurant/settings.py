@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-6rai_v4z5r!7_&1-ki5z)k*w2%x#9$^8pt+i(!cg&te*(yiwj$'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 AUTH_USER_MODEL = 'auth_user.User'
 # Application definition
@@ -64,7 +64,7 @@ ROOT_URLCONF = 'online_restaurant.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
+        'DIRS': []
         ,
         'APP_DIRS': True,
         'OPTIONS': {
@@ -90,6 +90,17 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+# if DEBUG:
+#     DATABASES["default"] = {
+#             'ENGINE': 'django.db.backends.sqlite3',
+#             'NAME': BASE_DIR / 'db.sqlite3',
+#
+#     }
+# else:
+#     DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
+#     # DATABASES['default'] = dj_database_url.config(default=config('DATABASE_URL'))
+
 
 
 # Password validation
@@ -128,7 +139,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
+# STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
 
 STATICFILES_DIRS = (
     os.path.join(PROJECT_ROOT, 'static'),
