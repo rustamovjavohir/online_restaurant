@@ -8,11 +8,12 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
 from taomlar.models import Pizza
-from .utils import full_data
+from .utils import full_data, TaomSerializer
 
 
 class Home(GenericAPIView):
     queryset = Pizza.objects.all()
+    serializer_class = TaomSerializer
     lookup_field = ['name']
     filter_backends = (filters.SearchFilter,)
     permission_classes = [AllowAny]
