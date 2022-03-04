@@ -1,13 +1,12 @@
 from django.db import transaction
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import filters
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import ListAPIView, GenericAPIView
 from rest_framework.parsers import MultiPartParser
 from rest_framework.permissions import AllowAny, IsAdminUser
 from rest_framework.viewsets import ModelViewSet
 
 from auth_user.user_jwt import L_JWTAuthentication
-from .models import *
 from .serializers import *
 from .utils import TaomPagination
 
@@ -276,7 +275,7 @@ class IchimliklarViewset(ModelViewSet):
 """
 
 
-class YaxnaTaomlarList(ListAPIView):
+class YaxnaTaomlarList(ListAPIView, GenericAPIView):
     queryset = YaxnaTaomlar.objects.all()
     serializer_class = YaxnaTaomlarSerializer
     filter_backends = (filters.SearchFilter,)
@@ -284,6 +283,19 @@ class YaxnaTaomlarList(ListAPIView):
     lookup_field = ['name']
     parser_classes = (MultiPartParser,)
     pagination_class = TaomPagination
+
+    @swagger_auto_schema(operation_summary="Yaxnataomlar haqidagi malumotlar ro'yhatini chop etish (all users)")
+    def get(self, request, *args, **kwargs):
+        return super(YaxnaTaomlarList, self).get(self, request, *args, **kwargs)
+    # def get(self, request, *args, **kwargs):
+    #     queryset = self.filter_queryset(self.get_queryset())
+    #     page = self.paginate_queryset(queryset)
+    #     if page is not None:
+    #         serializer = self.get_serializer(page, many=True)
+    #         return self.get_paginated_response(serializer.data)
+    #
+    #     serializer = self.get_serializer(queryset, many=True)
+    #     return Response(serializer.data)
 
 
 class QaynoqTaomlarList(ListAPIView):
@@ -295,6 +307,10 @@ class QaynoqTaomlarList(ListAPIView):
     parser_classes = (MultiPartParser,)
     pagination_class = TaomPagination
 
+    @swagger_auto_schema(operation_summary="Qaynoqtaomlar haqidagi malumotlar ro'yhatini chop etish (all users)")
+    def get(self, request, *args, **kwargs):
+        return super(QaynoqTaomlarList, self).get(self, request, *args, **kwargs)
+
 
 class SuyuqTaomlarList(ListAPIView):
     queryset = SuyuqTaomlar.objects.all()
@@ -304,6 +320,10 @@ class SuyuqTaomlarList(ListAPIView):
     lookup_field = ['name']
     parser_classes = (MultiPartParser,)
     pagination_class = TaomPagination
+
+    @swagger_auto_schema(operation_summary="Suyuqtaomlar haqidagi malumotlar ro'yhatini chop etish (all users)")
+    def get(self, request, *args, **kwargs):
+        return super(SuyuqTaomlarList, self).get(self, request, *args, **kwargs)
 
 
 class GoshtliTaomlarList(ListAPIView):
@@ -315,6 +335,10 @@ class GoshtliTaomlarList(ListAPIView):
     parser_classes = (MultiPartParser,)
     pagination_class = TaomPagination
 
+    @swagger_auto_schema(operation_summary="Go'shtlitaomlar haqidagi malumotlar ro'yhatini chop etish (all users)")
+    def get(self, request, *args, **kwargs):
+        return super(GoshtliTaomlarList, self).get(self, request, *args, **kwargs)
+
 
 class BaliqliTaomlarList(ListAPIView):
     queryset = BaliqliTaomlar.objects.all()
@@ -324,6 +348,10 @@ class BaliqliTaomlarList(ListAPIView):
     lookup_field = ['name']
     parser_classes = (MultiPartParser,)
     pagination_class = TaomPagination
+
+    @swagger_auto_schema(operation_summary="Baliqlitaomlar haqidagi malumotlar ro'yhatini chop etish (all users)")
+    def get(self, request, *args, **kwargs):
+        return super(BaliqliTaomlarList, self).get(self, request, *args, **kwargs)
 
 
 class PizzaList(ListAPIView):
@@ -335,6 +363,10 @@ class PizzaList(ListAPIView):
     parser_classes = (MultiPartParser,)
     pagination_class = TaomPagination
 
+    @swagger_auto_schema(operation_summary="Pitsa haqidagi malumotlar ro'yhatini chop etish (all users)")
+    def get(self, request, *args, **kwargs):
+        return super(PizzaList, self).get(self, request, *args, **kwargs)
+
 
 class IchimliklarList(ListAPIView):
     queryset = Ichimliklar.objects.all()
@@ -344,3 +376,7 @@ class IchimliklarList(ListAPIView):
     lookup_field = ['name']
     parser_classes = (MultiPartParser,)
     pagination_class = TaomPagination
+
+    @swagger_auto_schema(operation_summary="Ichimliklar haqidagi malumotlar ro'yhatini chop etish (all users)")
+    def get(self, request, *args, **kwargs):
+        return super(IchimliklarList, self).get(self, request, *args, **kwargs)
