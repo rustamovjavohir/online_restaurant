@@ -10,7 +10,7 @@ class Taomlar(models.Model):
     image = models.ImageField()
     weight = models.IntegerField(default=0)
     price = models.FloatField(default=0)
-    # is_added = models.BooleanField(default=False) # mana shuni ham qoshish kerak
+    is_added = models.BooleanField(default=False)
 
     class Meta:
         ordering = ["name"]
@@ -72,7 +72,7 @@ class Ichimliklar(models.Model):
     image = models.ImageField()
     size = models.CharField(max_length=5, null=True, choices=SIZE, default='0.5L')
     price = models.IntegerField(default=0)
-    is_added = models.BooleanField(default=True)
+    is_added = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name

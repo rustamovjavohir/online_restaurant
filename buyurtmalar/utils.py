@@ -11,9 +11,6 @@ baliq_taom = BaliqliTaomlar.objects.all()
 ichimlik = Ichimliklar.objects.all()
 
 
-# taom_list = [qay_taom, yax_taom, suy_taom,
-#              gosht_taom, pizza, baliq_taom]
-
 def taom_nomlari():
     taom_list = [qay_taom, yax_taom, suy_taom,
                  gosht_taom, pizza, baliq_taom, ichimlik]
