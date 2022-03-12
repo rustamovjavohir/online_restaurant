@@ -33,13 +33,15 @@ def full_data():
     _ = []
     taom_type = ["yaxnataomlar", "qaynoqtaomlar", "baliqlitaomlar",
                  "pizza", "goshtlitaomlar", "ichimliklar"]
+    taom_nomi = ["Yaxna taomlar", "Qaynoq Taomlar", "Baliqli Taomlar",
+                 "Pitsa", "Go'shtli Taomlat", "Ichimliklar"]
     ser_class = [YaxnaTaomlarSerializer, QaynoqTaomlarSerializer,
                  BaliqliTaomlarSerializer, PizzaSerializer,
                  GoshtliTaomlarSerializer, IchimliklarSerializer]
     taom_list = [YaxnaTaomlar, QaynoqTaomlar, BaliqliTaomlar,
                  Pizza, GoshtliTaomlar, Ichimliklar]
-    _.append({f"advertising": advertising_data()})
-    for (model, _type, serializer) in zip(taom_list, taom_type, ser_class):
+    _.append({"code": "reklama", "name": "Reklama", f"advertising": advertising_data()})
+    for (nomi, model, _type, serializer) in zip(taom_nomi, taom_list, taom_type, ser_class):
         data = some_data(model, serializer_class=serializer)
-        _.append({f"{_type}": data})
+        _.append({"code": f"{_type}", "name": f"{nomi}", f"{_type}": data})
     return _
