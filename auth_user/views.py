@@ -1,21 +1,17 @@
 from datetime import datetime, timedelta
 
 import jwt
-from django.shortcuts import render
+from drf_yasg.utils import swagger_auto_schema
 from rest_framework.exceptions import AuthenticationFailed
+from rest_framework.generics import GenericAPIView
 from rest_framework.parsers import MultiPartParser
-from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.generics import GenericAPIView
-from rest_framework.decorators import action, permission_classes
-from drf_yasg.utils import swagger_auto_schema
 
 # from ..app.models import User
 from .models import User
 from .serializers import UserSerializers, LoginSerializer
-from rest_framework.viewsets import ModelViewSet
-
 from .user_jwt import L_JWTAuthentication
 from .utils import admin, check_token
 

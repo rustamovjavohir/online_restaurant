@@ -43,5 +43,5 @@ def full_data():
     _.append({"code": "reklama", "name": "Reklama", f"advertising": advertising_data()})
     for (nomi, model, _type, serializer) in zip(taom_nomi, taom_list, taom_type, ser_class):
         data = some_data(model, serializer_class=serializer)
-        _.append({"code": f"{_type}", "name": f"{nomi}", f"{_type}": data})
+        _.append({"code": f"{_type}", "name": f"{nomi}", "data": data})
     return _

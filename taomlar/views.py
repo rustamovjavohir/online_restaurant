@@ -1,9 +1,10 @@
 from django.db import transaction
 from drf_yasg.utils import swagger_auto_schema
-from rest_framework import filters
+from rest_framework import filters, status
 from rest_framework.generics import ListAPIView, GenericAPIView
 from rest_framework.parsers import MultiPartParser
 from rest_framework.permissions import AllowAny, IsAdminUser
+from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 from auth_user.user_jwt import L_JWTAuthentication
@@ -30,17 +31,31 @@ class YaxnaTaomlarViewset(ModelViewSet):
     @transaction.atomic
     @swagger_auto_schema(operation_summary="Yangi yaxnataom kirish")
     def create(self, request, *args, **kwargs):
-        return super(YaxnaTaomlarViewset, self).create(self, request, *args, **kwargs)
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
     @transaction.atomic
     @swagger_auto_schema(operation_summary="Yaxnataom malumotlarini yangilash")
     def update(self, request, *args, **kwargs):
-        return super(YaxnaTaomlarViewset, self).update(self, request, *args, **kwargs)
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+
+        if getattr(instance, '_prefetched_objects_cache', None):
+            instance._prefetched_objects_cache = {}
+
+        return Response(serializer.data)
 
     @transaction.atomic
     @swagger_auto_schema(operation_summary="Yaxnataom malumotlarini qisman yangilash")
     def partial_update(self, request, *args, **kwargs):
-        return super(YaxnaTaomlarViewset, self).partial_update(self, request, *args, **kwargs)
+        kwargs['partial'] = True
+        return self.update(request, *args, **kwargs)
 
     @swagger_auto_schema(operation_summary="Yaxnataom malumotlarini o'chirish")
     def destroy(self, request, *args, **kwargs):
@@ -66,17 +81,31 @@ class QaynoqTaomlarViewset(ModelViewSet):
     @transaction.atomic
     @swagger_auto_schema(operation_summary="Yangi qaynoqtaom kirish")
     def create(self, request, *args, **kwargs):
-        return super(QaynoqTaomlarViewset, self).create(self, request, *args, **kwargs)
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
     @transaction.atomic
     @swagger_auto_schema(operation_summary="Qaynoqtaom malumotlarini yangilash")
     def update(self, request, *args, **kwargs):
-        return super(QaynoqTaomlarViewset, self).update(self, request, *args, **kwargs)
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+
+        if getattr(instance, '_prefetched_objects_cache', None):
+            instance._prefetched_objects_cache = {}
+
+        return Response(serializer.data)
 
     @transaction.atomic
     @swagger_auto_schema(operation_summary="Qaynoqtaom malumotlarini qisman yangilash")
     def partial_update(self, request, *args, **kwargs):
-        return super(QaynoqTaomlarViewset, self).partial_update(self, request, *args, **kwargs)
+        kwargs['partial'] = True
+        return self.update(request, *args, **kwargs)
 
     @swagger_auto_schema(operation_summary="Qaynoqtaom malumotlarini o'chirish")
     def destroy(self, request, *args, **kwargs):
@@ -102,17 +131,31 @@ class SuyuqTaomlarViewset(ModelViewSet):
     @transaction.atomic
     @swagger_auto_schema(operation_summary="Yangi suyuqtaom kirish")
     def create(self, request, *args, **kwargs):
-        return super(SuyuqTaomlarViewset, self).create(self, request, *args, **kwargs)
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
     @transaction.atomic
     @swagger_auto_schema(operation_summary="Suyuqtaom malumotlarini yangilash")
     def update(self, request, *args, **kwargs):
-        return super(SuyuqTaomlarViewset, self).update(self, request, *args, **kwargs)
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+
+        if getattr(instance, '_prefetched_objects_cache', None):
+            instance._prefetched_objects_cache = {}
+
+        return Response(serializer.data)
 
     @transaction.atomic
     @swagger_auto_schema(operation_summary="Suyuqtaom malumotlarini qisman yangilash")
     def partial_update(self, request, *args, **kwargs):
-        return super(SuyuqTaomlarViewset, self).partial_update(self, request, *args, **kwargs)
+        kwargs['partial'] = True
+        return self.update(request, *args, **kwargs)
 
     @swagger_auto_schema(operation_summary="Suyuqtaom malumotlarini o'chirish")
     def destroy(self, request, *args, **kwargs):
@@ -138,17 +181,31 @@ class GoshtliTaomlarViewset(ModelViewSet):
     @transaction.atomic
     @swagger_auto_schema(operation_summary="Yangi goshtlitaom kirish")
     def create(self, request, *args, **kwargs):
-        return super(GoshtliTaomlarViewset, self).create(self, request, *args, **kwargs)
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
     @transaction.atomic
     @swagger_auto_schema(operation_summary="Goshtlitaom malumotlarini yangilash")
     def update(self, request, *args, **kwargs):
-        return super(GoshtliTaomlarViewset, self).update(self, request, *args, **kwargs)
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+
+        if getattr(instance, '_prefetched_objects_cache', None):
+            instance._prefetched_objects_cache = {}
+
+        return Response(serializer.data)
 
     @transaction.atomic
     @swagger_auto_schema(operation_summary="Goshtlitaom malumotlarini qisman yangilash")
     def partial_update(self, request, *args, **kwargs):
-        return super(GoshtliTaomlarViewset, self).partial_update(self, request, *args, **kwargs)
+        kwargs['partial'] = True
+        return self.update(request, *args, **kwargs)
 
     @swagger_auto_schema(operation_summary="Goshtlitaom malumotlarini o'chirish")
     def destroy(self, request, *args, **kwargs):
@@ -175,17 +232,31 @@ class BaliqliTaomlarViewset(ModelViewSet):
     @transaction.atomic
     @swagger_auto_schema(operation_summary="Yangi baliqlitaom kirish")
     def create(self, request, *args, **kwargs):
-        return super(BaliqliTaomlarViewset, self).create(self, request, *args, **kwargs)
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
     @transaction.atomic
     @swagger_auto_schema(operation_summary="Baliqlitaom malumotlarini yangilash")
     def update(self, request, *args, **kwargs):
-        return super(BaliqliTaomlarViewset, self).update(self, request, *args, **kwargs)
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+
+        if getattr(instance, '_prefetched_objects_cache', None):
+            instance._prefetched_objects_cache = {}
+
+        return Response(serializer.data)
 
     @transaction.atomic
     @swagger_auto_schema(operation_summary="Baliqlitaom malumotlarini qisman yangilash")
     def partial_update(self, request, *args, **kwargs):
-        return super(BaliqliTaomlarViewset, self).partial_update(self, request, *args, **kwargs)
+        kwargs['partial'] = True
+        return self.update(request, *args, **kwargs)
 
     @swagger_auto_schema(operation_summary="Baliqlitaom malumotlarini o'chirish")
     def destroy(self, request, *args, **kwargs):
@@ -212,17 +283,31 @@ class PizzaViewset(ModelViewSet):
     @transaction.atomic
     @swagger_auto_schema(operation_summary="Yangi pitsa kirish")
     def create(self, request, *args, **kwargs):
-        return super(PizzaViewset, self).create(self, request, *args, **kwargs)
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
     @transaction.atomic
     @swagger_auto_schema(operation_summary="Pitsa malumotlarini yangilash")
     def update(self, request, *args, **kwargs):
-        return super(PizzaViewset, self).update(self, request, *args, **kwargs)
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+
+        if getattr(instance, '_prefetched_objects_cache', None):
+            instance._prefetched_objects_cache = {}
+
+        return Response(serializer.data)
 
     @transaction.atomic
     @swagger_auto_schema(operation_summary="Pitsa malumotlarini qisman yangilash")
     def partial_update(self, request, *args, **kwargs):
-        return super(PizzaViewset, self).partial_update(self, request, *args, **kwargs)
+        kwargs['partial'] = True
+        return self.update(request, *args, **kwargs)
 
     @swagger_auto_schema(operation_summary="Pitsa malumotlarini o'chirish")
     def destroy(self, request, *args, **kwargs):
@@ -249,17 +334,31 @@ class IchimliklarViewset(ModelViewSet):
     @transaction.atomic
     @swagger_auto_schema(operation_summary="Yangi ichimlik kirish")
     def create(self, request, *args, **kwargs):
-        return super(IchimliklarViewset, self).create(self, request, *args, **kwargs)
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
     @transaction.atomic
     @swagger_auto_schema(operation_summary="Ichimlik malumotlarini yangilash")
     def update(self, request, *args, **kwargs):
-        return super(IchimliklarViewset, self).update(self, request, *args, **kwargs)
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+
+        if getattr(instance, '_prefetched_objects_cache', None):
+            instance._prefetched_objects_cache = {}
+
+        return Response(serializer.data)
 
     @transaction.atomic
     @swagger_auto_schema(operation_summary="Ichimlik malumotlarini qisman yangilash")
     def partial_update(self, request, *args, **kwargs):
-        return super(IchimliklarViewset, self).partial_update(self, request, *args, **kwargs)
+        kwargs['partial'] = True
+        return self.update(request, *args, **kwargs)
 
     @swagger_auto_schema(operation_summary="Ichimlik malumotlarini o'chirish")
     def destroy(self, request, *args, **kwargs):

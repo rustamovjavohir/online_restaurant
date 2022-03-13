@@ -33,6 +33,10 @@ class BasketView(ModelViewSet):
     def list(self, request, *args, **kwargs):
         return super(BasketView, self).list(self, request, *args, **kwargs)
 
+    @swagger_auto_schema(operation_summary="Savatdagi mahsulotlarni chop etish(retrive)")
+    def retrieve(self, request, *args, **kwargs):
+        return super(BasketView, self).retrieve(self, request, *args, **kwargs)
+
     @transaction.atomic
     @swagger_auto_schema(operation_summary="Mahsulotni savatga qoshish")
     def create(self, request, *args, **kwargs):
@@ -47,12 +51,22 @@ class BasketView(ModelViewSet):
 
     @swagger_auto_schema(operation_summary="Savatchadagi ma`lumotlarni qisaman o'zgartirish")
     def partial_update(self, request, *args, **kwargs):
-        return super(BasketView, self).partial_update(self, request, *args, **kwargs)
+        kwargs['partial'] = True
+        return self.update(request, *args, **kwargs)
 
     @transaction.atomic
     @swagger_auto_schema(operation_summary="Savatchadagi ma`lumotlarni o`zgartirish")
     def update(self, request, *args, **kwargs):
-        return super(BasketView, self).update(self, request, *args, **kwargs)
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+
+        if getattr(instance, '_prefetched_objects_cache', None):
+            instance._prefetched_objects_cache = {}
+
+        return Response(serializer.data)
 
     @transaction.atomic
     @swagger_auto_schema(operation_summary="Savatchadagi mahsulotlarni ochirish")

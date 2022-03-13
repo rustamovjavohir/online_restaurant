@@ -12,6 +12,8 @@ class Taomlar(models.Model):
     price = models.FloatField(default=0)
     is_added = models.BooleanField(default=False)
 
+
+
     class Meta:
         ordering = ["name"]
         abstract = True
