@@ -1,6 +1,4 @@
 from taomlar.models import *
-from collections import namedtuple
-
 
 qay_taom = QaynoqTaomlar.objects.all()
 yax_taom = YaxnaTaomlar.objects.all()
@@ -51,6 +49,3 @@ def savatga_qoshish(request):
     }
 
     return data
-
-
-

@@ -6,7 +6,7 @@ class UserSerializers(ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'first_name', 'last_name', "email", 'date_of_birth', 'password')  # 'password'
+        fields = ('id', 'username', 'first_name', 'last_name', "email", 'date_of_birth', 'profile_image', 'password')  # 'password'
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
@@ -24,6 +24,7 @@ class UserSerializers(ModelSerializer):
         instance.first_name = validated_data.get('first_name', instance.first_name)
         instance.last_name = validated_data.get('last_name', instance.last_name)
         instance.email = validated_data.get('email', instance.email)
+        instance.profile_image = validated_data.get('profile_image',  instance.profile_image)
         instance.date_of_birth = validated_data.get('date_of_birth', instance.date_of_birth)
         password = validated_data.get('password')
         if password:

@@ -1,6 +1,7 @@
 from django.contrib import admin
+
 from .models import (QaynoqTaomlar, SuyuqTaomlar, YaxnaTaomlar,
-                    Pizza, GoshtliTaomlar, BaliqliTaomlar, Ichimliklar)
+                     Pizza, GoshtliTaomlar, BaliqliTaomlar, Ichimliklar, Accessory)
 
 
 @admin.register(QaynoqTaomlar)
@@ -38,4 +39,6 @@ class IchimliklarAdmin(admin.ModelAdmin):
     list_display = ['name']
 
 
-
+@admin.register(Accessory)
+class AccessoryAdmin(admin.ModelAdmin):
+    list_display = ['name']

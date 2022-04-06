@@ -15,39 +15,53 @@ class YaxnaTaomlarSerializer(ModelSerializer):
     class Meta:
         model = YaxnaTaomlar
         fields = '__all__'
+        # read_only_fields = ('id',)
 
 
 class QaynoqTaomlarSerializer(ModelSerializer):
     class Meta:
         model = QaynoqTaomlar
         fields = '__all__'
+        # read_only_fields = ('id',)
 
 
 class SuyuqTaomlarSerializer(ModelSerializer):
     class Meta:
         model = SuyuqTaomlar
         fields = '__all__'
+        # read_only_fields = ('id',)
 
 
 class BaliqliTaomlarSerializer(ModelSerializer):
     class Meta:
         model = BaliqliTaomlar
         fields = '__all__'
+        # read_only_fields = ('id',)
 
 
 class GoshtliTaomlarSerializer(ModelSerializer):
     class Meta:
         model = GoshtliTaomlar
         fields = '__all__'
+        read_only_fields = ('id',)
 
 
 class PizzaSerializer(ModelSerializer):
     class Meta:
         model = Pizza
         fields = '__all__'
+        # read_only_fields = ('id',)
 
 
 class IchimliklarSerializer(ModelSerializer):
     class Meta:
         model = Ichimliklar
         fields = '__all__'
+        # read_only_fields = ('id',)
+
+
+class AccessorySerializer(ModelSerializer):
+    class Meta:
+        model = Accessory
+        fields = '__all__'
+        # read_only_fields = ('id',)

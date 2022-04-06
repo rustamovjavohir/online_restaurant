@@ -14,7 +14,11 @@ def admin(user):
 
 
 def check_token(request):
-    token = request.COOKIES.get('Token')
+    if request.COOKIES.get('Token'):
+        token = request.COOKIES.get('Token')
+    else:
+        token = request.data.get("Token",)
+    # token = request.data.get("Token",)
     if not token:
         raise AuthenticationFailed('Unauthenticated')
     try:

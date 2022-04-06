@@ -2,7 +2,7 @@ from django.db import transaction
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import status, filters
 from rest_framework.generics import GenericAPIView
-from rest_framework.parsers import MultiPartParser
+from rest_framework.parsers import MultiPartParser, JSONParser
 from rest_framework.permissions import AllowAny, IsAdminUser
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
@@ -11,7 +11,7 @@ from auth_user.user_jwt import L_JWTAuthentication
 from taomlar.models import Pizza
 from .models import Advertising
 from .serializers import AdvertisingSerializer
-from .utils import full_data, YaxnaTaomlar
+from .utils import full_data, YaxnaTaomlar, advertising_date
 
 
 class Home(GenericAPIView):
@@ -24,6 +24,7 @@ class Home(GenericAPIView):
 
     @swagger_auto_schema(operation_summary="Home")
     def get(self, request, *args, **kwargs):
+        advertising_date()
         data = full_data()
         return Response(data, status=status.HTTP_200_OK)
 
@@ -31,9 +32,9 @@ class Home(GenericAPIView):
 class AdvertisingViewSet(ModelViewSet):
     queryset = Advertising.objects.all()
     serializer_class = AdvertisingSerializer
-    parser_classes = (MultiPartParser,)
-    permission_classes = [IsAdminUser]
-    authentication_classes = [L_JWTAuthentication]
+    parser_classes = (MultiPartParser, )
+    # permission_classes = [IsAdminUser]
+    # authentication_classes = [L_JWTAuthentication]
 
     @swagger_auto_schema(operation_summary="Reklamalar ro'yhatini chop etadi")
     def list(self, request, *args, **kwargs):

@@ -4,7 +4,7 @@ import jwt
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.generics import GenericAPIView
-from rest_framework.parsers import MultiPartParser
+from rest_framework.parsers import MultiPartParser, JSONParser
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -81,7 +81,7 @@ class UserViews(GenericAPIView):
         user = User.objects.filter(id=payload.get('id')).first()
         serializer = UserSerializers(user)
         data = serializer.data
-        data['users'] = admin(user)
+        # data['users'] = admin(user)
         return Response(data)
 
     @swagger_auto_schema(operation_summary="Foydalanuvchi ma`lumotlarini yangilash")
@@ -95,6 +95,19 @@ class UserViews(GenericAPIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
+
+        # partial = kwargs.pop('partial', False)
+        # instance = self.get_object()
+        # serializer = self.get_serializer(instance, data=request.data, partial=True)
+        # serializer.is_valid(raise_exception=True)
+        # serializer.save()
+        #
+        # if getattr(instance, '_prefetched_objects_cache', None):
+        #     # If 'prefetch_related' has been applied to a queryset, we need to
+        #     # forcibly invalidate the prefetch cache on the instance.
+        #     instance._prefetched_objects_cache = {}
+        #
+        # return Response(serializer.data)
 
 
 class LogoutViews(APIView):

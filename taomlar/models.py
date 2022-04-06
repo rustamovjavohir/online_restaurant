@@ -1,21 +1,25 @@
 from django.db import models
-
+import time
+import uuid
 
 # Create your models here.
 
 
 class Taomlar(models.Model):
+    # id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.IntegerField(blank=True, unique=True, default=int(time.time() * 1000), primary_key=True)
     name = models.CharField(max_length=250, null=False, blank=False)
     description = models.TextField(null=False, blank=False)
     image = models.ImageField()
-    weight = models.IntegerField(default=0)
+    # weight = models.IntegerField(default=0)
     price = models.FloatField(default=0)
-    is_added = models.BooleanField(default=False)
+    buy_count = models.IntegerField(default=1, blank=True,)
+    is_added = models.BooleanField(default=False, blank=True,)
 
 
 
     class Meta:
-        ordering = ["name"]
+        ordering = ["id"]
         abstract = True
 
 
@@ -69,16 +73,41 @@ class Ichimliklar(models.Model):
             ('1L', '1L'),
             ('1.5L', '1.5L'))
 
+    id = models.IntegerField(default=int(time.time() * 1000), primary_key=True)
+    # id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=250, null=False, blank=False)
     description = models.TextField(null=False, blank=False)
     image = models.ImageField()
     size = models.CharField(max_length=5, null=True, choices=SIZE, default='0.5L')
     price = models.IntegerField(default=0)
+    buy_count = models.IntegerField(default=1)
     is_added = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name
 
     class Meta:
-        ordering = ["name"]
+        ordering = ["id"]
         # db_table = "ichimliklar"
+
+
+class Accessory(models.Model):
+    MODEL_CODE = (("YAXNATAOMLAR", "Yaxna Taomlar"),
+                  ("GOSHTLITAOMLAR", "GoshtliTaomlar"),
+                  ("QAYNOQTAOMLAR", "Qaynoqtaomlar"),
+                  ("BALIQLITAOMLAR", "BaliqliTaomlar"))
+    # id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.IntegerField(blank=True, unique=True, default=int(time.time() * 1000), primary_key=True)
+    model_code = models.CharField(choices=MODEL_CODE, max_length=250)
+    name = models.CharField(max_length=250)
+    description = models.TextField(null=False, blank=False)
+    image = models.ImageField(null=True,)
+    price = models.IntegerField(default=0)
+    buy_count = models.IntegerField(default=1, blank=True,)
+    is_added = models.BooleanField(default=False, blank=True,)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ["id"]

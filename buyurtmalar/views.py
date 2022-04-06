@@ -3,12 +3,12 @@ from django.db import transaction
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 from rest_framework import status
-from rest_framework.decorators import action
-from rest_framework.parsers import MultiPartParser
+from rest_framework.decorators import action, api_view
+from rest_framework.parsers import MultiPartParser, JSONParser
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
-from rest_framework.generics import CreateAPIView, GenericAPIView, get_object_or_404
+from rest_framework.generics import CreateAPIView, GenericAPIView, get_object_or_404, ListAPIView, DestroyAPIView
 
 from auth_user.models import User
 from auth_user.user_jwt import L_JWTAuthentication
@@ -22,8 +22,8 @@ class BasketView(ModelViewSet):
     queryset = Savatcha.objects.all()
     serializer_class = SavatchaSerializer
     parser_classes = (MultiPartParser,)
-    permission_classes = [IsAuthenticated]
-    authentication_classes = [L_JWTAuthentication]
+    # permission_classes = [IsAuthenticated]
+    # authentication_classes = [L_JWTAuthentication]
 
     def get_queryset(self):
         self.queryset = Savatcha.objects.filter(mijoz_id=self.request.user.id, is_deleted=False)
@@ -79,6 +79,7 @@ class BasketView(ModelViewSet):
     def add(self, request, *args, **kwargs):
         mahsulot = Savatcha.objects.filter(mahsulot=str(request.data.get('mahsulot')).upper(),
                                            mijoz=request.user.id, is_deleted=False).first()
+
         mahsulot.count += 1
         mahsulot.save()
         return Response({"message": "successfully"}, status=status.HTTP_200_OK)
@@ -95,16 +96,16 @@ class BasketView(ModelViewSet):
         return Response({"message": "successfully"}, status=status.HTTP_200_OK)
 
 
-class BuyurtmaView(GenericAPIView):
+class BuyurtmaView(ModelViewSet):
     queryset = Buyurtma.objects.all()
     serializer_class = BuyurtmaSerializer
     parser_classes = (MultiPartParser,)
-    permission_classes = [IsAuthenticated]
-    authentication_classes = [L_JWTAuthentication]
+    # permission_classes = [IsAuthenticated]
+    # authentication_classes = [L_JWTAuthentication]
 
     @transaction.atomic
     @swagger_auto_schema(operation_summary='Buyurtma yetkazib berishni rasmiylashtirish')
-    def post(self, request, *args, **kwargs):
+    def create(self, request, *args, **kwargs):
         """
         Buyurtma yetkazib berishni rasmiylashtirish
         """
@@ -116,4 +117,18 @@ class BuyurtmaView(GenericAPIView):
         # headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
+    @swagger_auto_schema(operation_summary="Buyurtma ro'yhatini chop etish")
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
 
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
+    @swagger_auto_schema(operation_summary="Buyurtmani ro'yhatdan ochirish")
+    def destroy(self, request, *args, **kwargs):
+        return super(BuyurtmaView, self).destroy(self, request, *args, **kwargs)
