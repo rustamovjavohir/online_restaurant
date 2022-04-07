@@ -14,6 +14,7 @@ djangorestframework-jwt==1.11.0
 djangorestframework-simplejwt==5.0.0
 drf-yasg==1.20.0
 filelock==3.4.2
+gunicorn==20.1.0
 idna==3.3
 inflection==0.5.1
 itypes==1.2.0
@@ -23,6 +24,7 @@ packaging==21.3
 Pillow==9.0.1
 platformdirs==2.4.1
 psycopg2==2.9.3
+psycopg2-binary==2.9.3
 pycparser==2.21
 PyJWT==2.3.0
 pyparsing==3.0.7
