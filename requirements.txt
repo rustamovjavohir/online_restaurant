@@ -22,6 +22,7 @@ MarkupSafe==2.1.0
 packaging==21.3
 Pillow==9.0.1
 platformdirs==2.4.1
+psycopg2==2.9.3
 pycparser==2.21
 PyJWT==2.3.0
 pyparsing==3.0.7

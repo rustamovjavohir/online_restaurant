@@ -1,33 +1,33 @@
 from taomlar.models import *
 
-qay_taom = QaynoqTaomlar.objects.all()
-yax_taom = YaxnaTaomlar.objects.all()
-suy_taom = SuyuqTaomlar.objects.all()
-gosht_taom = GoshtliTaomlar.objects.all()
-pizza = Pizza.objects.all()
-baliq_taom = BaliqliTaomlar.objects.all()
-ichimlik = Ichimliklar.objects.all()
+# qay_taom = QaynoqTaomlar.objects.all()
+# yax_taom = YaxnaTaomlar.objects.all()
+# suy_taom = SuyuqTaomlar.objects.all()
+# gosht_taom = GoshtliTaomlar.objects.all()
+# pizza = Pizza.objects.all()
+# baliq_taom = BaliqliTaomlar.objects.all()
+# ichimlik = Ichimliklar.objects.all()
 
 
 def taom_nomlari():
-    taom_list = [qay_taom, yax_taom, suy_taom,
-                 gosht_taom, pizza, baliq_taom, ichimlik]
+    # taom_list = [qay_taom, yax_taom, suy_taom,
+    #              gosht_taom, pizza, baliq_taom, ichimlik]
     TAOM_NOMI = ()
-    for obj_list in taom_list:
-        for obj in obj_list:
-            my_tuple = ((f"{obj.name.upper()}", f"{obj.name}"),)
-            TAOM_NOMI += my_tuple
+    # for obj_list in taom_list:
+    #     for obj in obj_list:
+    #         my_tuple = ((f"{obj.name.upper()}", f"{obj.name}"),)
+    #         TAOM_NOMI += my_tuple
     return TAOM_NOMI
 
 
 def taom_narxi():
-    taom_list = [qay_taom, yax_taom, suy_taom,
-                 gosht_taom, pizza, baliq_taom, ichimlik]
+    # taom_list = [qay_taom, yax_taom, suy_taom,
+    #              gosht_taom, pizza, baliq_taom, ichimlik]
     NARXI = ()
-    for obj_list in taom_list:
-        for obj in obj_list:
-            my_tuple = ((f"{obj.price}", f"{obj.price}"),)
-            NARXI += my_tuple
+    # for obj_list in taom_list:
+    #     for obj in obj_list:
+    #         my_tuple = ((f"{obj.price}", f"{obj.price}"),)
+    #         NARXI += my_tuple
     return NARXI
 
 
