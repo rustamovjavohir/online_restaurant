@@ -10,7 +10,6 @@ distlib==0.3.4
 Django==4.0.2
 django-cors-headers==3.11.0
 djangorestframework==3.13.1
-djangorestframework-jwt==1.11.0
 djangorestframework-simplejwt==5.0.0
 drf-yasg==1.20.0
 filelock==3.4.2
