@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-6rai_v4z5r!7_&1-ki5z)k*w2%x#9$^8pt+i(!cg&te*(yiwj$'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 
@@ -97,11 +97,11 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'online-restaurant',
-            'USER': 'postgres',
-            'PASSWORD': '200527',
-            'HOST': '127.0.0.1',
-            'PORT': '5432',
+            'NAME': 'aksess300',
+            'USER': 'javohir',
+            'PASSWORD': 'password',
+            'HOST': 'localhost',
+            'PORT': '',
         }
     }
 
@@ -141,7 +141,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Tashkent'
 
 USE_I18N = True
 
