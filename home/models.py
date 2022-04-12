@@ -6,7 +6,7 @@ from django.db import models
 class Advertising(models.Model):
     title = models.CharField(max_length=250, default='Aksiya')
     descriptions = models.TextField(null=True, blank=True)
-    image = models.ImageField()
+    image = models.ImageField(null=False, blank=False)
     # food_id = models.IntegerField(default=0)
     # new_price = models.IntegerField(default=0)
     start = models.DateTimeField(default=datetime.now())
