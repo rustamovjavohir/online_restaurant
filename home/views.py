@@ -1,6 +1,7 @@
 from django.db import transaction
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import status, filters
+from rest_framework.decorators import action
 from rest_framework.generics import GenericAPIView
 from rest_framework.parsers import MultiPartParser, JSONParser
 from rest_framework.permissions import AllowAny, IsAdminUser
@@ -38,7 +39,30 @@ class AdvertisingViewSet(ModelViewSet):
 
     @swagger_auto_schema(operation_summary="Reklamalar ro'yhatini chop etadi")
     def list(self, request, *args, **kwargs):
-        return super(AdvertisingViewSet, self).list(self, request, *args, **kwargs)
+        queryset = Advertising.objects.filter(is_deleted=False)
+        queryset = self.filter_queryset(queryset=queryset)
+        advertising_date()
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+        # return super(AdvertisingViewSet, self).list(self, request, *args, **kwargs)
+
+    @swagger_auto_schema(operation_summary="Reklamalar ro'yhatini chop admin uchun (vaqti tugaganlarni ham chop etadi)")
+    @action(methods=['get'], detail=False, url_path='list_advertising', url_name='list_advertising')
+    def list_advertising(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
 
     @swagger_auto_schema(operation_summary="Reklama haqidagi ma'lumotni chop etish(retrive)")
     def retrieve(self, request, *args, **kwargs):
