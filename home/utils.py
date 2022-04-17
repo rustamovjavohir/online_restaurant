@@ -75,3 +75,10 @@ def advertising_date():
         if finish_date <= now:
             adv.is_deleted = True
             adv.save()
+
+
+def increase_price(objects, percent):
+    percent = 1 + percent / 100
+    for item in objects:
+        item.price *= percent
+        item.save()

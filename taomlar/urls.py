@@ -2,7 +2,7 @@ from django.urls import path
 from .api import urlpatterns as api_urls
 from .views import (YaxnaTaomlarList, QaynoqTaomlarList,
                     SuyuqTaomlarList, BaliqliTaomlarList,
-                    PizzaList, GoshtliTaomlarList, IchimliklarList, AccessoryModelCode)
+                    PizzaList, GoshtliTaomlarList, IchimliklarList, AccessoryModelCode, )
 
 urlpatterns = [
     path("yaxnataomlist/", YaxnaTaomlarList.as_view(), name="yaxnataomlist"),

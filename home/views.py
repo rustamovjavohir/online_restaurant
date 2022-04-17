@@ -9,10 +9,11 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 from auth_user.user_jwt import L_JWTAuthentication
-from taomlar.models import Pizza
+from taomlar.models import Pizza, YaxnaTaomlar, QaynoqTaomlar, BaliqliTaomlar, GoshtliTaomlar, Accessory
+from taomlar.serializers import YaxnaTaomlarSerializer
 from .models import Advertising
 from .serializers import AdvertisingSerializer
-from .utils import full_data, YaxnaTaomlar, advertising_date
+from .utils import full_data, YaxnaTaomlar, advertising_date, increase_price
 
 
 class Home(GenericAPIView):
@@ -100,3 +101,24 @@ class AdvertisingViewSet(ModelViewSet):
     @swagger_auto_schema(operation_summary="Reklama ma'lumotlarini ochirish")
     def destroy(self, request, *args, **kwargs):
         return super(AdvertisingViewSet, self).destroy(self, request, *args, **kwargs)
+
+
+class Discount(GenericAPIView):
+    queryset = YaxnaTaomlar.objects.all()
+    serializer_class = YaxnaTaomlarSerializer
+    parser_classes = (JSONParser,)
+
+    @swagger_auto_schema(operation_summary="Narxni oshish (% da)")
+    def put(self, request, *args, **kwargs):
+        try:
+            percent = float(request.data.get('percent'))
+            increase_price(YaxnaTaomlar.objects.all(), percent)
+            increase_price(QaynoqTaomlar.objects.all(), percent)
+            increase_price(BaliqliTaomlar.objects.all(), percent)
+            increase_price(GoshtliTaomlar.objects.all(), percent)
+            increase_price(Accessory.objects.all(), percent)
+            return Response({"message": "successfully"}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"message": "foiz sonlarda kiritilsin"}, status=status.HTTP_200_OK)
+
+
